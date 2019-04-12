@@ -6,14 +6,14 @@
 void dfs(struct task_struct *task,int depth) {
   struct task_struct *cursor;
   int d_check=depth;
-  char *tab = "  ";
+  char *tab = ".  ";
   char tabspace[30] = "";
   while(d_check > 0){
 	strcat(tabspace,tab);
     d_check--;
   }
   
-  printk(KERN_INFO "COMM: %-20s STATE: %ld\t %sPID: %d\n", task->comm, task->state, tabspace, task->pid);
+  printk(KERN_INFO "COMM: %-20s STATE: %ld\t%sPID: %d\n", task->comm, task->state, tabspace, task->pid);
 	
   list_for_each_entry(cursor, &task->children, sibling) { 
 	dfs(cursor,depth+1); 
