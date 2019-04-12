@@ -1,0 +1,3 @@
+/home/os2019/git_repo/OS_linux-practice/os_week3/week03_2013045957/bdlist.ko
+/home/os2019/git_repo/OS_linux-practice/os_week3/week03_2013045957/bdlist.o
+

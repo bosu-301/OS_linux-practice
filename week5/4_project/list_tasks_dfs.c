@@ -5,12 +5,20 @@
 
 void dfs(struct task_struct *task) {
   struct task_struct *cursor;
+  
   printk(KERN_INFO "COMM: %-20s STATE: %ld\tPID: %d\n", task->comm, task->state,
          task->pid);
-
-  list_for_each_entry(/* 1) 빈칸 채우기 */) { 
-	  dfs(/* 2) 빈칸 채우기 */); 
+	
+  list_for_each_entry(cursor, &task->children, sibling) { 
+	  dfs(cursor); 
   }
+
+/*  else{
+	list_for_each_entry(cursor, &cursor, sibling){
+		dfs(cursor);
+	}
+  }*/
+		
 }
 
 static int __init list_task_init(void) {
@@ -19,7 +27,7 @@ static int __init list_task_init(void) {
   // pid가 1인 프로세스 즉 init 프로세의 pid 구조체를 가져온다.
   struct pid *init_pid = find_get_pid(1);
   struct task_struct *init_task;
-
+  
   // 가져온 pid를 통해 해당 프로세스의 task_struct 구조체를 가져온다.
   init_task = pid_task(init_pid, PIDTYPE_PID);
 
