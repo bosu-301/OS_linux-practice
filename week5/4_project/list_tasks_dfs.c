@@ -3,21 +3,22 @@
 #include <linux/module.h>
 #include <linux/sched.h>
 
-void dfs(struct task_struct *task) {
+void dfs(struct task_struct *task,int depth) {
   struct task_struct *cursor;
+  int d_check=depth;
+  char *tab = "  ";
+  char tabspace[30] = "";
+  while(d_check > 0){
+	strcat(tabspace,tab);
+    d_check--;
+  }
   
-  printk(KERN_INFO "COMM: %-20s STATE: %ld\tPID: %d\n", task->comm, task->state,
-         task->pid);
+  printk(KERN_INFO "COMM: %-20s STATE: %ld\t %sPID: %d\n", task->comm, task->state, tabspace, task->pid);
 	
   list_for_each_entry(cursor, &task->children, sibling) { 
-	  dfs(cursor); 
+	dfs(cursor,depth+1); 
   }
 
-/*  else{
-	list_for_each_entry(cursor, &cursor, sibling){
-		dfs(cursor);
-	}
-  }*/
 		
 }
 
@@ -32,7 +33,7 @@ static int __init list_task_init(void) {
   init_task = pid_task(init_pid, PIDTYPE_PID);
 
   printk(KERN_INFO "INSTALL: list_tasks_dfs\n");
-  dfs(init_task); // 깊이 우선 탐색을 통해 init 프로세스를 기점으로 모든
+  dfs(init_task,0); // 깊이 우선 탐색을 통해 init 프로세스를 기점으로 모든
                   // 자식노드들의 프로세스를 탐색한다.
   return 0;
 }
