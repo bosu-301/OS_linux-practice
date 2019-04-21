@@ -1,3 +1,5 @@
+/*happpyJsL happpy_shell*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -22,32 +24,27 @@ int main(void) {
 		}
   		
 	
-		printf("HAPPY_shell> ");
+		printf("HAPPPY_shell> ");
     	fflush(stdout);
 		char *str = (char*)malloc(MAX_LEN*sizeof(char));
 		char *input = (char*)malloc(MAX_LEN*sizeof(char));
 		fgets(input, MAX_LEN, stdin);
 		strcpy(str,input); 
-		//strncpy(str,input,sizeof(stt)-1);
+		
 		
 		if (strlen(input)==1){
 			free(input);
 			goto come_here;
 		}
 		/*check input =="exit" , quit shell*/
+		
 		else if (strncmp(input,"exit",4)==0){
 			should_run =0;
 			printf("bye~bye~  :) \n");
 			return 0;
 		}
 		
-		//printf("%d\n",strcmp(str,""));
-		//printf("INPUT: %s\n", str);
-		//printf("input size %ld\n",sizeof(&input));
-		//printf("str size %ld\n",sizeof(str));
-			
 		
-		//char *test; //test yong
 		int break_while = 0;
 		
 		
@@ -81,8 +78,14 @@ int main(void) {
 			}
 		i++;
 		}	
-		
-		
+		if (strcmp(args[0],"cd") == 0){
+		    if (chdir(args[1])==0)
+			    printf("move to %s\n",args[1]);
+			else{
+			    printf("wrong directory! \n");
+			}
+			goto come_here;
+		}
 		/*do fork*/
 		int pid = fork();
 		
@@ -94,8 +97,8 @@ int main(void) {
 
 		//child part
 		else if(pid == 0){ 
-			printf("\n");
-			printf("%s command\n",args[0]);
+		//	printf("\n");
+			printf("'%s' commanded\n",args[0]);
 		//	char *example[]={"ls","-l",0};
 		//	printf("%s\n",example[0]);
 			
@@ -105,26 +108,28 @@ int main(void) {
 			return 99;
 		}
 		
-		//parent part
 		else{
 			if (background == 1){
-				printf("--------------------\n");
-				printf("background == 1 \n");
-				printf("--------------------\n");
+			//	printf("--------------------\n");
+			//	printf("background == 1 \n");
+			//	printf("--------------------\n");
 				goto come_here;
 			}
 			wait(NULL);
-			printf("----------------------\n");
-			printf("(PID = %d)Complete\n",pid);
-			printf("----------------------\n\n");	
+			//printf("----------------------\n");
+			//printf("(PID = %d)Complete\n",pid);
+			//printf("----------------------\n\n");	
 			
 		}
-		
-		
   		come_here:;
+		/* 
+		args include "&" or 
+		no input string or
+		get "cd" command
+		*/
 	}
 	return 0;
 	
 }
 
-/*happy happy*/
+/*happpy happpy*/
