@@ -1,0 +1,1 @@
+cmd_/home/os2019/practice_03_29_19/bdlist.ko := ld -r -m elf_x86_64  -z max-page-size=0x200000 -T ./scripts/module-common.lds  --build-id  -o /home/os2019/practice_03_29_19/bdlist.ko /home/os2019/practice_03_29_19/bdlist.o /home/os2019/practice_03_29_19/bdlist.mod.o ;  true
